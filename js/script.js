@@ -53,7 +53,8 @@ const quotes = [
 
 let excludeQuotesNumber = 2; // suppress this number of recently shown quotes; if you want to show all quotes without a repeat, use quotes.length-1
 excludeQuotesNumber = Math.min(quotes.length-1, excludeQuotesNumber); // prevents errors from poor choice of excludeQuotesNumber
-setInterval(printQuote,10000);
+const intervalMilliseconds = 10000; // the page updates the quote automatically after this many milliseconds
+let resetInterval = setInterval(printQuote,intervalMilliseconds);
 
 
 const recentQuoteTable = []; // store recently used quotes
@@ -117,6 +118,8 @@ function printQuote() {
 	// following line to change background color found here:
 	// https://css-tricks.com/snippets/javascript/random-hex-color/
 	document.body.style.background = "#" + Math.floor(Math.random()*16777215).toString(16);
+	clearInterval(resetInterval);
+	resetInterval = setInterval(printQuote,intervalMilliseconds);
 	return htmlString;
 }
 
